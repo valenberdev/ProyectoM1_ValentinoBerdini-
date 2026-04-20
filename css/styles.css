@@ -79,10 +79,22 @@ body {
   filter: drop-shadow(0 0 6px rgba(255, 78, 205, 0.4));
 }
 
-/* BOTÓN GENERAR COLOR (ajustado para que no se corte) */
+/* CONTENEDOR FLOTANTE */
+.controls {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  z-index: 1000;
+}
+
+/* BOTÓN GENERAR */
 .btn-generate {
-  padding: 12px 24px; /* un poco más chico */
+  padding: 12px 24px;
   font-size: 15px;
   font-weight: 600;
   border-radius: 12px;
@@ -93,93 +105,56 @@ body {
   border: none;
   cursor: pointer;
 
-  position: relative;
-  overflow: hidden;
-
   transition: all 0.2s ease;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* HOVER (menos movimiento para evitar que choque con navbar) */
 .btn-generate:hover {
-  transform: translateY(-1px) scale(1.01);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
 }
 
-/* ACTIVE */
-.btn-generate:active {
-  transform: scale(0.98);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* EFECTO BRILLO */
-.btn-generate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.btn-generate:hover::after {
-  opacity: 1;
-}
-
-
-/* BOTÓN SELECT (fix color de texto visible) */
-
+/* SELECT */
 .btn-select {
-  padding: 12px 22px;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 10px;
 
-  color: #e6e6f0; /* color claro pero no blanco puro */
-  background: rgba(255, 255, 255, 0.05);
+  color: #e6e6f0;
+  background: rgba(255, 255, 255, 0.06);
 
   border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(6px);
 
   cursor: pointer;
-
-  position: relative;
-  overflow: hidden;
-
-  transition: all 0.2s ease;
 }
 
-/* HOVER */
-.btn-select:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 78, 205, 0.6);
-  transform: translateY(-1px);
-}
-
-/* OPCIONES DEL SELECT (cuando se despliega) */
+/* OPCIONES */
 .btn-select option {
-  color: #111;          /* texto oscuro */
-  background: #ffffff;  /* fondo blanco */
+  color: #111;
+  background: #fff;
 }
 
-/* ACTIVE */
-.btn-select:active {
-  transform: scale(0.98);
+/* CONTENEDOR */
+.palette {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 80px); /* altura total menos header */
 }
 
-/* EFECTO BRILLO */
-.btn-select::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* CADA SECCIÓN (ahora verticales) */
+.color-section {
+  flex: 1; /* todas ocupan el mismo espacio */
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-select:hover::after {
-  opacity: 1;
-}
+/* COLORES DE PRUEBA */
+.color-section:nth-child(1) { background: #ff4ecd; }
+.color-section:nth-child(2) { background: #4efcff; }
+.color-section:nth-child(3) { background: #4eff9f; }
+.color-section:nth-child(4) { background: #ffb84e; }
+.color-section:nth-child(5) { background: #6a5cff; }
