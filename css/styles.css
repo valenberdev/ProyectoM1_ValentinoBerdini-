@@ -1,24 +1,69 @@
+/* BASE */
+body {
+  font-family: 'Zalando Sans SemiExpanded', sans-serif;
+  background: #0f0f1a;
+  color: #ffffff;
+}
+
+/* HEADER */
 .header {
-    padding: 20px;
-    background-color: #111;
-    /* podés cambiarlo */
+  width: 100%;
+  padding: 18px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: rgba(15, 15, 26, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.logo-container a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+/* CONTAINER */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* LOGO */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+/* IMAGE */
 .logo {
-    width: 150px;
-    /* ajustás tamaño acá */
-    height: auto;
-    margin-right: 10px;
+  width: 42px;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
 .logo-text {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 22px;
+  font-weight: 600;
+
+  background: linear-gradient(
+    90deg,
+    #ff4ecd,
+    #ffb84e,
+    #4efcff,
+    #4eff9f
+  );
+
+  background-clip: text;          /* estándar */
+  -webkit-background-clip: text;  /* compatibilidad */
+
+  color: transparent;             /* estándar */
+  -webkit-text-fill-color: transparent; /* compatibilidad */
+}
+
+/* HOVER EFFECT */
+.logo-container:hover .logo {
+  transform: rotate(8deg) scale(1.1);
+}
+
+/* OPTIONAL: subtle glow */
+.logo-container:hover .logo-text {
+  filter: drop-shadow(0 0 6px rgba(255, 78, 205, 0.4));
 }
