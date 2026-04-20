@@ -40,7 +40,7 @@ body {
 
 /* LOGO IMAGE (más grande sin agrandar el header) */
 .logo {
-  height: 60px;       /* aumenta el tamaño visible */
+  height: 70px;       /* aumenta el tamaño visible */
   width: auto;
   object-fit: contain;
 
@@ -51,7 +51,7 @@ body {
 }
 
 .logo-text {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
 
   background: linear-gradient(
