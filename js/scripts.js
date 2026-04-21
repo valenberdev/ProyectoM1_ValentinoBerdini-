@@ -1,61 +1,75 @@
-/* GENERADOR DE COLORES HEX + HSL */
+
+
+
 
 const btnGenerate = document.querySelector(".btn-generate");
-const sections = document.querySelectorAll(".color-section");
+const select = document.querySelector(".btn-select");
+const palette = document.querySelector(".palette");
 
-btnGenerate.addEventListener("click", () => {
-  sections.forEach((section) => {
-    const { hex, hsl } = generarColor();
+let cantidad = 0;
 
-    // aplicar color
-    section.style.background = hex;
+select.addEventListener("change", () => {
+  cantidad = parseInt(select.value);
 
-    // mostrar HEX en pantalla
-    section.textContent = hex;
-
-    // mostrar HSL en consola
-    console.log(hsl);
-
-    // contraste automático para texto
-    section.style.color = getContrastColor(hex);
-  });
+  crearSecciones(cantidad);
+  generarColores();
 });
 
-/* FUNCIONES */
+btnGenerate.addEventListener("click", () => {
+  if (cantidad === 0) return;
+  generarColores();
+});
 
-// genera color en HEX y HSL
+function crearSecciones(num) {
+  palette.innerHTML = "";
+
+  for (let i = 0; i < num; i++) {
+    const section = document.createElement("section");
+    section.classList.add("color-section");
+    palette.appendChild(section);
+  }
+}
+
+function generarColores() {
+  const sections = document.querySelectorAll(".color-section");
+
+  sections.forEach(section => {
+    const { hex, hsl } = generarColor();
+
+    section.style.background = hex;
+    section.textContent = hex;
+    section.style.color = getContrastColor(hex);
+
+    console.log(hsl);
+  });
+}
+
 function generarColor() {
   const h = Math.floor(Math.random() * 360);
   const s = Math.floor(Math.random() * 100);
   const l = Math.floor(Math.random() * 100);
 
   const hsl = `hsl(${h}, ${s}%, ${l}%)`;
-
   const hex = hslToHex(h, s, l);
 
   return { hex, hsl };
 }
 
-// convierte HSL a HEX
 function hslToHex(h, s, l) {
   s /= 100;
   l /= 100;
 
-  const k = (n) => (n + h / 30) % 12;
+  const k = n => (n + h / 30) % 12;
   const a = s * Math.min(l, 1 - l);
 
-  const f = (n) =>
-    Math.round(
-      255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))
-    );
+  const f = n =>
+    Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
 
-  return (
-    "#" +
-    [f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, "0")).join("")
-  );
+  return "#" + [f(0), f(8), f(4)]
+    .map(x => x.toString(16).padStart(2, "0"))
+    .join("");
 }
 
-// color de texto automático (blanco o negro)
 function getContrastColor(hex) {
   const r = parseInt(hex.substr(1, 2), 16);
   const g = parseInt(hex.substr(3, 2), 16);
