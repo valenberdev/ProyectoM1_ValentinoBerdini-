@@ -1,12 +1,13 @@
 const btnGenerate = document.querySelector(".btn-generate");
 const select = document.querySelector(".btn-select");
 const palette = document.querySelector(".palette");
-const colorBoxes = document.querySelectorAll(".color-box");
+const saveBtn = document.getElementById("guardadoPaleta");
+const loadBtn = document.getElementById("cargaPaleta");
+
 let cantidad = 0;
 
 select.addEventListener("change", () => {
   cantidad = parseInt(select.value);
-
   crearSecciones(cantidad);
   generarColores();
 });
@@ -32,16 +33,10 @@ function crearSecciones(num) {
     const selectFormat = document.createElement("select");
     selectFormat.classList.add("format-select");
 
-    const optionHex = document.createElement("option");
-    optionHex.value = "hex";
-    optionHex.textContent = "HEX";
-
-    const optionHsl = document.createElement("option");
-    optionHsl.value = "hsl";
-    optionHsl.textContent = "HSL";
-
-    selectFormat.appendChild(optionHex);
-    selectFormat.appendChild(optionHsl);
+    selectFormat.innerHTML = `
+      <option value="hex">HEX</option>
+      <option value="hsl">HSL</option>
+    `;
 
     container.appendChild(text);
     container.appendChild(selectFormat);
@@ -56,43 +51,49 @@ function generarColores() {
   sections.forEach((section) => {
     const { hex, hsl } = generarColor();
 
-    section.style.background = hex;
-
-    const text = section.querySelector(".color-code");
-    const selectFormat = section.querySelector(".format-select");
-
-    text.textContent = hex;
-    text.style.color = getContrastColor(hex);
-
-    console.log(hsl);
-
-    selectFormat.onchange = () => {
-      if (selectFormat.value === "hex") {
-        text.textContent = hex;
-        text.classList.remove("hsl");
-      } else {
-        text.textContent = hsl;
-        text.classList.add("hsl");
-      }
-    };
-
-    text.onclick = () => {
-      const valor = selectFormat.value === "hex" ? hex : hsl;
-
-      navigator.clipboard.writeText(valor);
-
-      const original = text.textContent;
-      const isHSL = selectFormat.value === "hsl";
-
-      text.textContent = "Copiado!";
-      text.classList.remove("hsl"); 
-
-      setTimeout(() => {
-        text.textContent = original;
-        if (isHSL) text.classList.add("hsl");
-      }, 800);
-    };
+    aplicarColor(section, { hex, hsl });
   });
+}
+
+function aplicarColor(section, color) {
+  const text = section.querySelector(".color-code");
+  const selectFormat = section.querySelector(".format-select");
+
+  section.style.background = color.hex;
+
+  text.textContent = color.hex;
+  text.style.color = getContrastColor(color.hex);
+
+  selectFormat.value = "hex";
+
+  selectFormat.onchange = () => {
+    if (selectFormat.value === "hex") {
+      text.textContent = color.hex;
+      text.classList.remove("hsl");
+    } else {
+      text.textContent = color.hsl;
+      text.classList.add("hsl");
+    }
+  };
+
+  text.onclick = () => {
+    const valor = selectFormat.value === "hex" ? color.hex : color.hsl;
+
+    navigator.clipboard.writeText(valor);
+
+    const original = text.textContent;
+    const isHSL = selectFormat.value === "hsl";
+
+    text.textContent = "Copiado!";
+    text.classList.remove("hsl");
+
+    setTimeout(() => {
+      text.textContent = original;
+      if (isHSL) text.classList.add("hsl");
+    }, 800);
+  };
+
+  console.log(color.hsl);
 }
 
 function generarColor() {
@@ -104,17 +105,6 @@ function generarColor() {
   const hex = hslToHex(h, s, l);
 
   return { hex, hsl };
-
-  section.onclick = () => {
-    navigator.clipboard.writeText(hex);
-
-    const originalText = section.textContent;
-    section.textContent = "Copiado!";
-
-    setTimeout(() => {
-      section.textContent = originalText;
-    }, 800);
-  };
 }
 
 function hslToHex(h, s, l) {
@@ -126,7 +116,7 @@ function hslToHex(h, s, l) {
 
   const f = (n) =>
     Math.round(
-      255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
+      255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))
     );
 
   return (
@@ -145,41 +135,64 @@ function getContrastColor(hex) {
   return luminance > 0.5 ? "#000" : "#fff";
 }
 
-colorBoxes.forEach(box => {
-  const hint = document.createElement("div");
-  hint.classList.add("copy-hint");
-  hint.textContent = "Click en el código de abajo para copiar";
-  box.appendChild(hint);
-});
-
-
-const saveBtn = document.getElementById("guardadoPaleta");
-const loadBtn = document.getElementById("cargaPaleta");
-const sections = () => document.querySelectorAll(".color-section");
-
 saveBtn.addEventListener("click", () => {
-  const colors = [];
+  const paletteData = [];
 
-  sections().forEach(section => {
-    colors.push(section.style.backgroundColor);
+  document.querySelectorAll(".color-section").forEach(section => {
+    const bg = section.style.backgroundColor;
+
+    const hex = rgbToHex(bg);
+    const hsl = rgbToHsl(bg);
+
+    paletteData.push({ hex, hsl });
   });
 
-  localStorage.setItem("savedPalette", JSON.stringify(colors));
+  localStorage.setItem("savedPalette", JSON.stringify(paletteData));
 });
 
 loadBtn.addEventListener("click", () => {
   const saved = JSON.parse(localStorage.getItem("savedPalette"));
-
   if (!saved) return;
 
-  crearSecciones(saved.length);
+  cantidad = saved.length;
+  select.value = cantidad;
 
-  const newSections = document.querySelectorAll(".color-section");
+  crearSecciones(cantidad);
 
-  newSections.forEach((section, index) => {
-    section.style.backgroundColor = saved[index];
+  const sections = document.querySelectorAll(".color-section");
 
-    const code = section.querySelector(".color-code");
-    code.textContent = saved[index];
+  sections.forEach((section, index) => {
+    aplicarColor(section, saved[index]);
   });
 });
+
+function rgbToHex(rgb) {
+  const result = rgb.match(/\d+/g);
+  return "#" + result.map(x => (+x).toString(16).padStart(2, "0")).join("");
+}
+
+function rgbToHsl(rgb) {
+  let [r, g, b] = rgb.match(/\d+/g).map(Number);
+  r /= 255; g /= 255; b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+
+    h /= 6;
+  }
+
+  return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+}
