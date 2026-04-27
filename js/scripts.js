@@ -85,7 +85,7 @@ function generarColores() {
       const isHSL = selectFormat.value === "hsl";
 
       text.textContent = "Copiado!";
-      text.classList.remove("hsl"); // evita que se rompa visualmente
+      text.classList.remove("hsl"); 
 
       setTimeout(() => {
         text.textContent = original;
