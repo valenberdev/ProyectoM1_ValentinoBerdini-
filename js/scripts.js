@@ -289,3 +289,20 @@ loadBtn.addEventListener("click", () => {
 });
 
 actualizarLista();
+
+window.addEventListener("load", () => {
+  const select = document.querySelector(".btn-select");
+
+  const coloresIniciales = 5;
+
+  cantidad = coloresIniciales;
+
+  select.value = String(coloresIniciales);
+
+  if (select.value !== String(coloresIniciales)) {
+    select.selectedIndex = coloresIniciales - 1;
+  }
+
+  crearSecciones(coloresIniciales);
+  generarColores();
+});
