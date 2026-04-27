@@ -1,7 +1,7 @@
 const btnGenerate = document.querySelector(".btn-generate");
 const select = document.querySelector(".btn-select");
 const palette = document.querySelector(".palette");
-
+const colorBoxes = document.querySelectorAll(".color-box");
 let cantidad = 0;
 
 select.addEventListener("change", () => {
@@ -144,3 +144,10 @@ function getContrastColor(hex) {
 
   return luminance > 0.5 ? "#000" : "#fff";
 }
+
+colorBoxes.forEach(box => {
+  const hint = document.createElement("div");
+  hint.classList.add("copy-hint");
+  hint.textContent = "Click en el código de abajo para copiar";
+  box.appendChild(hint);
+});

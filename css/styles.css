@@ -166,6 +166,32 @@ body {
   word-break: break-word;
 }
 
+.color-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.color-section::after {
+  content: "Click en el código de abajo para copiar";
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.color-section:hover::after {
+  opacity: 1;
+}
+
 .format-select {
   padding: 6px 10px;
   font-size: 12px;
