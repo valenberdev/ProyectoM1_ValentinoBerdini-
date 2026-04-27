@@ -151,3 +151,35 @@ colorBoxes.forEach(box => {
   hint.textContent = "Click en el código de abajo para copiar";
   box.appendChild(hint);
 });
+
+
+const saveBtn = document.getElementById("guardadoPaleta");
+const loadBtn = document.getElementById("cargaPaleta");
+const sections = () => document.querySelectorAll(".color-section");
+
+saveBtn.addEventListener("click", () => {
+  const colors = [];
+
+  sections().forEach(section => {
+    colors.push(section.style.backgroundColor);
+  });
+
+  localStorage.setItem("savedPalette", JSON.stringify(colors));
+});
+
+loadBtn.addEventListener("click", () => {
+  const saved = JSON.parse(localStorage.getItem("savedPalette"));
+
+  if (!saved) return;
+
+  crearSecciones(saved.length);
+
+  const newSections = document.querySelectorAll(".color-section");
+
+  newSections.forEach((section, index) => {
+    section.style.backgroundColor = saved[index];
+
+    const code = section.querySelector(".color-code");
+    code.textContent = saved[index];
+  });
+});
