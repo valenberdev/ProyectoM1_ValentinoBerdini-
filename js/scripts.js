@@ -1,7 +1,4 @@
 
-
-
-
 const btnGenerate = document.querySelector(".btn-generate");
 const select = document.querySelector(".btn-select");
 const palette = document.querySelector(".palette");
