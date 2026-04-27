@@ -276,20 +276,25 @@ body {
   bottom: 20px;
   left: 20px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  align-items: center;
   z-index: 1000;
 }
 
-.controles-paleta button {
-  background: rgba(20, 20, 20, 0.8);
+.controles-paleta button,
+.controles-paleta select {
+  background: rgba(20, 20, 20, 0.85);
   color: #fff;
   border: none;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
   font-size: 13px;
-  cursor: pointer;
   backdrop-filter: blur(6px);
-  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.controles-paleta select {
+  appearance: none;
 }
 
 .controles-paleta button:hover {

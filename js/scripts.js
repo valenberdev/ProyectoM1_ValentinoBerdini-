@@ -3,6 +3,7 @@ const select = document.querySelector(".btn-select");
 const palette = document.querySelector(".palette");
 const saveBtn = document.getElementById("guardadoPaleta");
 const loadBtn = document.getElementById("cargaPaleta");
+const lista = document.getElementById("listaPaletas");
 
 let cantidad = 0;
 
@@ -226,3 +227,65 @@ saveBtn.addEventListener("click", () => {
 
   mostrarPopup();
 });
+
+function getPaletas() {
+  return JSON.parse(localStorage.getItem("paletas")) || [];
+}
+
+function setPaletas(data) {
+  localStorage.setItem("paletas", JSON.stringify(data));
+}
+
+function actualizarLista() {
+  const paletas = getPaletas();
+
+  lista.innerHTML = `<option value="">Paletas guardadas</option>`;
+
+  paletas.forEach((_, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `Paleta ${i + 1}`;
+    lista.appendChild(option);
+  });
+}
+
+saveBtn.addEventListener("click", () => {
+  const paletas = getPaletas();
+  const nueva = [];
+
+  document.querySelectorAll(".color-section").forEach(section => {
+    const bg = section.style.backgroundColor;
+
+    nueva.push({
+      hex: rgbToHex(bg),
+      hsl: rgbToHsl(bg)
+    });
+  });
+
+  paletas.push(nueva);
+  setPaletas(paletas);
+  actualizarLista();
+
+  mostrarPopup(); 
+});
+
+loadBtn.addEventListener("click", () => {
+  const index = lista.value;
+  if (index === "") return;
+
+  const paletas = getPaletas();
+  const seleccionada = paletas[index];
+
+  cantidad = seleccionada.length;
+  select.value = cantidad;
+
+  crearSecciones(cantidad);
+
+  const sections = document.querySelectorAll(".color-section");
+
+  sections.forEach((section, i) => {
+    aplicarColor(section, seleccionada[i]);
+  });
+});
+
+actualizarLista();
