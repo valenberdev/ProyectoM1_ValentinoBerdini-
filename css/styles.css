@@ -152,16 +152,21 @@ body {
   cursor: pointer;
 }
 
-.toggle-format {
+.format-select {
   padding: 6px 10px;
   font-size: 12px;
   border-radius: 8px;
 
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.25);
   color: #fff;
 
   border: none;
   cursor: pointer;
+}
+
+.format-select option {
+  color: #111;
+  background: #fff;
 }
 
 .footer {

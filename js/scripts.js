@@ -16,6 +16,7 @@ btnGenerate.addEventListener("click", () => {
   generarColores();
 });
 
+/* CREAR SECCIONES */
 function crearSecciones(num) {
   palette.innerHTML = "";
 
@@ -29,37 +30,57 @@ function crearSecciones(num) {
     const text = document.createElement("span");
     text.classList.add("color-code");
 
-    const toggle = document.createElement("button");
-    toggle.classList.add("toggle-format");
-    toggle.textContent = "HEX";
+    const selectFormat = document.createElement("select");
+    selectFormat.classList.add("format-select");
+
+    const optionHex = document.createElement("option");
+    optionHex.value = "hex";
+    optionHex.textContent = "HEX";
+
+    const optionHsl = document.createElement("option");
+    optionHsl.value = "hsl";
+    optionHsl.textContent = "HSL";
+
+    selectFormat.appendChild(optionHex);
+    selectFormat.appendChild(optionHsl);
 
     container.appendChild(text);
-    container.appendChild(toggle);
+    container.appendChild(selectFormat);
     section.appendChild(container);
     palette.appendChild(section);
   }
 }
 
+/* GENERAR COLORES */
 function generarColores() {
   const sections = document.querySelectorAll(".color-section");
 
-  sections.forEach((section) => {
+  sections.forEach(section => {
     const { hex, hsl } = generarColor();
 
     section.style.background = hex;
 
     const text = section.querySelector(".color-code");
-    const toggle = section.querySelector(".toggle-format");
-
-    let formato = "hex";
+    const selectFormat = section.querySelector(".format-select");
 
     text.textContent = hex;
     text.style.color = getContrastColor(hex);
 
     console.log(hsl);
 
+    /* CAMBIO DE FORMATO */
+    selectFormat.onchange = () => {
+      if (selectFormat.value === "hex") {
+        text.textContent = hex;
+      } else {
+        text.textContent = hsl;
+      }
+    };
+
+    /* COPIAR */
     text.onclick = () => {
-      const valor = formato === "hex" ? hex : hsl;
+      const valor = selectFormat.value === "hex" ? hex : hsl;
+
       navigator.clipboard.writeText(valor);
 
       const original = text.textContent;
@@ -70,6 +91,7 @@ function generarColores() {
       }, 800);
     };
   });
+}
 
   function generarColor() {
     const h = Math.floor(Math.random() * 360);
@@ -120,4 +142,3 @@ function generarColores() {
 
     return luminance > 0.5 ? "#000" : "#fff";
   }
-}
