@@ -16,7 +16,6 @@ btnGenerate.addEventListener("click", () => {
   generarColores();
 });
 
-/* CREAR SECCIONES */
 function crearSecciones(num) {
   palette.innerHTML = "";
 
@@ -51,11 +50,10 @@ function crearSecciones(num) {
   }
 }
 
-/* GENERAR COLORES */
 function generarColores() {
   const sections = document.querySelectorAll(".color-section");
 
-  sections.forEach(section => {
+  sections.forEach((section) => {
     const { hex, hsl } = generarColor();
 
     section.style.background = hex;
@@ -68,77 +66,81 @@ function generarColores() {
 
     console.log(hsl);
 
-    /* CAMBIO DE FORMATO */
     selectFormat.onchange = () => {
       if (selectFormat.value === "hex") {
         text.textContent = hex;
+        text.classList.remove("hsl");
       } else {
         text.textContent = hsl;
+        text.classList.add("hsl");
       }
     };
 
-    /* COPIAR */
     text.onclick = () => {
       const valor = selectFormat.value === "hex" ? hex : hsl;
 
       navigator.clipboard.writeText(valor);
 
       const original = text.textContent;
+      const isHSL = selectFormat.value === "hsl";
+
       text.textContent = "Copiado!";
+      text.classList.remove("hsl"); // evita que se rompa visualmente
 
       setTimeout(() => {
         text.textContent = original;
+        if (isHSL) text.classList.add("hsl");
       }, 800);
     };
   });
 }
 
-  function generarColor() {
-    const h = Math.floor(Math.random() * 360);
-    const s = Math.floor(Math.random() * 100);
-    const l = Math.floor(Math.random() * 100);
+function generarColor() {
+  const h = Math.floor(Math.random() * 360);
+  const s = Math.floor(Math.random() * 100);
+  const l = Math.floor(Math.random() * 100);
 
-    const hsl = `hsl(${h}, ${s}%, ${l}%)`;
-    const hex = hslToHex(h, s, l);
+  const hsl = `hsl(${h}, ${s}%, ${l}%)`;
+  const hex = hslToHex(h, s, l);
 
-    return { hex, hsl };
+  return { hex, hsl };
 
-    section.onclick = () => {
-      navigator.clipboard.writeText(hex);
+  section.onclick = () => {
+    navigator.clipboard.writeText(hex);
 
-      const originalText = section.textContent;
-      section.textContent = "Copiado!";
+    const originalText = section.textContent;
+    section.textContent = "Copiado!";
 
-      setTimeout(() => {
-        section.textContent = originalText;
-      }, 800);
-    };
-  }
+    setTimeout(() => {
+      section.textContent = originalText;
+    }, 800);
+  };
+}
 
-  function hslToHex(h, s, l) {
-    s /= 100;
-    l /= 100;
+function hslToHex(h, s, l) {
+  s /= 100;
+  l /= 100;
 
-    const k = (n) => (n + h / 30) % 12;
-    const a = s * Math.min(l, 1 - l);
+  const k = (n) => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
 
-    const f = (n) =>
-      Math.round(
-        255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
-      );
-
-    return (
-      "#" +
-      [f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, "0")).join("")
+  const f = (n) =>
+    Math.round(
+      255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
     );
-  }
 
-  function getContrastColor(hex) {
-    const r = parseInt(hex.substr(1, 2), 16);
-    const g = parseInt(hex.substr(3, 2), 16);
-    const b = parseInt(hex.substr(5, 2), 16);
+  return (
+    "#" +
+    [f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, "0")).join("")
+  );
+}
 
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+function getContrastColor(hex) {
+  const r = parseInt(hex.substr(1, 2), 16);
+  const g = parseInt(hex.substr(3, 2), 16);
+  const b = parseInt(hex.substr(5, 2), 16);
 
-    return luminance > 0.5 ? "#000" : "#fff";
-  }
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+  return luminance > 0.5 ? "#000" : "#fff";
+}

@@ -150,6 +150,20 @@ body {
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
+
+  white-space: nowrap; 
+}
+
+.color-code.hsl {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+
+  white-space: normal;  
+  text-align: center;
+  padding: 6px 10px;
+  max-width: 90%;
+  word-break: break-word;
 }
 
 .format-select {
