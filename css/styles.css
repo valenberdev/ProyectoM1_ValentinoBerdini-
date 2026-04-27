@@ -296,3 +296,25 @@ body {
   background: rgba(255, 255, 255, 0.9);
   color: #111;
 }
+
+.popup-guardado {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  background: rgba(20, 20, 20, 0.9);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.popup-guardado.show {
+  opacity: 1;
+  transform: translateY(0);
+}

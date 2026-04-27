@@ -196,3 +196,33 @@ function rgbToHsl(rgb) {
 
   return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
 }
+
+const popup = document.createElement("div");
+popup.classList.add("popup-guardado");
+popup.textContent = "Paleta guardada correctamente";
+document.body.appendChild(popup);
+
+function mostrarPopup() {
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 2000);
+}
+
+saveBtn.addEventListener("click", () => {
+  const paletteData = [];
+
+  document.querySelectorAll(".color-section").forEach(section => {
+    const bg = section.style.backgroundColor;
+
+    const hex = rgbToHex(bg);
+    const hsl = rgbToHsl(bg);
+
+    paletteData.push({ hex, hsl });
+  });
+
+  localStorage.setItem("savedPalette", JSON.stringify(paletteData));
+
+  mostrarPopup();
+});
