@@ -4,7 +4,6 @@
 ![CSS](https://img.shields.io/badge/CSS-3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
 ![Status](https://img.shields.io/badge/Estado-En%20desarrollo-green)
-![License](https://img.shields.io/badge/Licencia-MIT-lightgrey)
 
 Aplicación web interactiva que permite generar paletas de colores aleatorias, visualizar sus valores en distintos formatos y guardarlas para su uso posterior.
 
