@@ -12,40 +12,45 @@ Aplicación web interactiva que permite generar paletas de colores aleatorias, v
 
 ## 🚀 Características principales
 
-- Generación de paletas de colores aleatorias  
-- Selección de cantidad de colores  
+- Generación de paletas de colores aleatorias
+- Selección de cantidad de colores
 - Visualización en formatos:
   - HEX
-  - HSL  
-- Copiado automático al hacer click  
-- Guardado de múltiples paletas  
-- Carga de paletas previamente guardadas  
-- Interfaz moderna y responsiva  
-- Feedback visual (notificaciones al guardar)  
+  - HSL
+- Copiado automático al hacer click
+- Guardado de múltiples paletas
+- Carga de paletas previamente guardadas
+- Interfaz moderna y responsiva
+- Feedback visual (notificaciones al guardar)
 
 ---
 
 ## 👤 Manual de Usuario
 
 ### 1. Generar una paleta
-- Seleccioná la cantidad de colores desde el menú desplegable  
-- Presioná el botón **"Generar Paleta"**  
+
+- Seleccioná la cantidad de colores desde el menú desplegable
+- Presioná el botón **"Generar Paleta"**
 
 ### 2. Ver códigos de color
-- Cada color muestra su código en **HEX por defecto**  
-- Podés cambiar a **HSL** desde el selector  
+
+- Cada color muestra su código en **HEX por defecto**
+- Podés cambiar a **HSL** desde el selector
 
 ### 3. Copiar un color
-- Hacé click sobre el código  
-- El valor se copia automáticamente al portapapeles  
+
+- Hacé click sobre el código
+- El valor se copia automáticamente al portapapeles
 
 ### 4. Guardar una paleta
-- Presioná el botón **"Guardar Paleta"**  
-- Se almacenará en tu navegador  
+
+- Presioná el botón **"Guardar Paleta"**
+- Se almacenará en tu navegador
 
 ### 5. Cargar una paleta
-- Seleccioná una paleta del menú  
-- Presioná **"Cargar Paleta"**  
+
+- Seleccioná una paleta del menú
+- Presioná **"Cargar Paleta"**
 
 ---
 
@@ -53,17 +58,17 @@ Aplicación web interactiva que permite generar paletas de colores aleatorias, v
 
 ### Tecnologías utilizadas
 
-- HTML5 → Estructura  
-- CSS3 → Estilos y diseño responsive  
-- JavaScript (Vanilla) → Lógica de la aplicación  
+- HTML5 → Estructura
+- CSS3 → Estilos y diseño responsive
+- JavaScript (Vanilla) → Lógica de la aplicación
 
 ### Decisiones técnicas
 
-- Uso de **JavaScript puro** (sin frameworks) para mantener simplicidad  
-- Uso de **localStorage** para persistencia de datos  
-- Generación de colores mediante modelo **HSL → HEX**  
-- Diseño modular para facilitar escalabilidad  
-- Separación de responsabilidades (HTML / CSS / JS)  
+- Uso de **JavaScript puro** (sin frameworks) para mantener simplicidad
+- Uso de **localStorage** para persistencia de datos
+- Generación de colores mediante modelo **HSL → HEX**
+- Diseño modular para facilitar escalabilidad
+- Separación de responsabilidades (HTML / CSS / JS)
 
 ---
 
@@ -72,15 +77,15 @@ Aplicación web interactiva que permite generar paletas de colores aleatorias, v
 /ProyectoM1_ValentinoBerdini
 │
 ├── /assets
-│   ├── fav-iconColorfly.png
-│   └── logo_ColorFly.png
+│ ├── fav-iconColorfly.png
+│ └── logo_ColorFly.png
 │
 ├── /css
-│   ├── reset.css
-│   └── styles.css
+│ ├── reset.css
+│ └── styles.css
 │
 ├── /js
-│   └── scripts.js
+│ └── scripts.js
 │
 ├── index.html
 └── README.md
@@ -91,7 +96,7 @@ Aplicación web interactiva que permite generar paletas de colores aleatorias, v
 
 ### 1. Clonar el repositorio
 
-git clone [<URL_DEL_REPOSITORIO>](https://github.com/valenberdev/ProyectoM1_ValentinoBerdini-.git)
+git clone https://github.com/valenberdev/ProyectoM1_ValentinoBerdini-.git
 
 ### 2. Entrar a la carpeta
 
@@ -111,19 +116,19 @@ o hacer doble clic sobre el archivo.
 
 ### GitHub Pages
 
-- Subir el proyecto a GitHub  
-- Ir a Settings > Pages  
-- Seleccionar la rama main  
-- Guardar  
-- Acceder al link generado  
+- Subir el proyecto a GitHub
+- Ir a Settings > Pages
+- Seleccionar la rama main
+- Guardar
+- Acceder al link generado
 
 ---
 
 ## 📌 Notas
 
-- Las paletas se guardan en el navegador (localStorage)  
-- Si borrás los datos del navegador, se eliminan  
-- No requiere backend  
+- Las paletas se guardan en el navegador (localStorage)
+- Si borrás los datos del navegador, se eliminan
+- No requiere backend
 
 ---
 
