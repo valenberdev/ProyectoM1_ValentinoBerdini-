@@ -51,7 +51,6 @@ function generarColores() {
 
   sections.forEach((section) => {
     const { hex, hsl } = generarColor();
-
     aplicarColor(section, { hex, hsl });
   });
 }
@@ -93,8 +92,6 @@ function aplicarColor(section, color) {
       if (isHSL) text.classList.add("hsl");
     }, 800);
   };
-
-  console.log(color.hsl);
 }
 
 function generarColor() {
@@ -136,36 +133,65 @@ function getContrastColor(hex) {
   return luminance > 0.5 ? "#000" : "#fff";
 }
 
+function getPaletas() {
+  return JSON.parse(localStorage.getItem("paletas")) || [];
+}
+
+function setPaletas(data) {
+  localStorage.setItem("paletas", JSON.stringify(data));
+}
+
+function actualizarLista() {
+  const paletas = getPaletas();
+
+  lista.innerHTML = `<option value="">Paletas guardadas</option>`;
+
+  paletas.forEach((_, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `Paleta ${i + 1}`;
+    lista.appendChild(option);
+  });
+}
+
 saveBtn.addEventListener("click", () => {
-  const paletteData = [];
+  const paletas = getPaletas();
+  const nueva = [];
 
   document.querySelectorAll(".color-section").forEach(section => {
     const bg = section.style.backgroundColor;
 
-    const hex = rgbToHex(bg);
-    const hsl = rgbToHsl(bg);
-
-    paletteData.push({ hex, hsl });
+    nueva.push({
+      hex: rgbToHex(bg),
+      hsl: rgbToHsl(bg)
+    });
   });
 
-  localStorage.setItem("savedPalette", JSON.stringify(paletteData));
+  paletas.push(nueva);
+  setPaletas(paletas);
+  actualizarLista();
+  mostrarPopup();
 });
 
 loadBtn.addEventListener("click", () => {
-  const saved = JSON.parse(localStorage.getItem("savedPalette"));
-  if (!saved) return;
+  const index = lista.value;
+  if (index === "") return;
 
-  cantidad = saved.length;
+  const paletas = getPaletas();
+  const seleccionada = paletas[index];
+
+  cantidad = seleccionada.length;
   select.value = cantidad;
 
   crearSecciones(cantidad);
 
   const sections = document.querySelectorAll(".color-section");
 
-  sections.forEach((section, index) => {
-    aplicarColor(section, saved[index]);
+  sections.forEach((section, i) => {
+    aplicarColor(section, seleccionada[i]);
   });
 });
+
 
 function rgbToHex(rgb) {
   const result = rgb.match(/\d+/g);
@@ -211,92 +237,12 @@ function mostrarPopup() {
   }, 2000);
 }
 
-saveBtn.addEventListener("click", () => {
-  const paletteData = [];
-
-  document.querySelectorAll(".color-section").forEach(section => {
-    const bg = section.style.backgroundColor;
-
-    const hex = rgbToHex(bg);
-    const hsl = rgbToHsl(bg);
-
-    paletteData.push({ hex, hsl });
-  });
-
-  localStorage.setItem("savedPalette", JSON.stringify(paletteData));
-
-  mostrarPopup();
-});
-
-function getPaletas() {
-  return JSON.parse(localStorage.getItem("paletas")) || [];
-}
-
-function setPaletas(data) {
-  localStorage.setItem("paletas", JSON.stringify(data));
-}
-
-function actualizarLista() {
-  const paletas = getPaletas();
-
-  lista.innerHTML = `<option value="">Paletas guardadas</option>`;
-
-  paletas.forEach((_, i) => {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = `Paleta ${i + 1}`;
-    lista.appendChild(option);
-  });
-}
-
-saveBtn.addEventListener("click", () => {
-  const paletas = getPaletas();
-  const nueva = [];
-
-  document.querySelectorAll(".color-section").forEach(section => {
-    const bg = section.style.backgroundColor;
-
-    nueva.push({
-      hex: rgbToHex(bg),
-      hsl: rgbToHsl(bg)
-    });
-  });
-
-  paletas.push(nueva);
-  setPaletas(paletas);
-  actualizarLista();
-
-  mostrarPopup(); 
-});
-
-loadBtn.addEventListener("click", () => {
-  const index = lista.value;
-  if (index === "") return;
-
-  const paletas = getPaletas();
-  const seleccionada = paletas[index];
-
-  cantidad = seleccionada.length;
-  select.value = cantidad;
-
-  crearSecciones(cantidad);
-
-  const sections = document.querySelectorAll(".color-section");
-
-  sections.forEach((section, i) => {
-    aplicarColor(section, seleccionada[i]);
-  });
-});
-
 actualizarLista();
 
 window.addEventListener("load", () => {
-  const select = document.querySelector(".btn-select");
-
   const coloresIniciales = 5;
 
   cantidad = coloresIniciales;
-
   select.value = String(coloresIniciales);
 
   if (select.value !== String(coloresIniciales)) {
