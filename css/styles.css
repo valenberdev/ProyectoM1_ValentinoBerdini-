@@ -112,18 +112,31 @@ body {
   font-size: 14px;
   border-radius: 10px;
 
-  color: #e6e6f0;
-  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: rgba(20, 20, 20, 0.85); 
+  backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   cursor: pointer;
-}
 
+  box-shadow: var(--shadow-soft);
+
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+}
 .btn-select option {
   color: #111;
   background: #fff;
+}
+
+.btn-select:focus {
+  outline: none;
+  border: 1px solid #4efcff;
 }
 
 .palette {
