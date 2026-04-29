@@ -1,3 +1,8 @@
+:root {
+  --shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.25);
+  --shadow-strong: 0 10px 22px rgba(0, 0, 0, 0.3);
+}
+
 body {
   font-family: 'Zalando Sans SemiExpanded', sans-serif;
   background: #0f0f1a;
@@ -94,12 +99,12 @@ body {
   cursor: pointer;
 
   transition: all 0.2s ease;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-soft);
 }
 
 .btn-generate:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-strong);
 }
 
 .btn-select {
@@ -111,7 +116,7 @@ body {
   background: rgba(255, 255, 255, 0.06);
 
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
 
   cursor: pointer;
 }
@@ -127,6 +132,23 @@ body {
   height: calc(100vh - 80px);
 }
 
+@media (max-width: 768px) {
+  .palette {
+    flex-direction: column;
+  }
+
+  .controls {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .controles-paleta {
+    left: 10px;
+    bottom: 10px;
+  }
+}
+
+
 .color-section {
   flex: 1;
   height: 100%;
@@ -137,6 +159,8 @@ body {
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
 }
 
 .color-content {
@@ -151,7 +175,12 @@ body {
   font-weight: 600;
   cursor: pointer;
 
-  white-space: nowrap; 
+  white-space: nowrap;
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
 }
 
 .color-code.hsl {
@@ -159,16 +188,11 @@ body {
   line-height: 1.6;
   letter-spacing: 0.5px;
 
-  white-space: normal;  
+  white-space: normal;
   text-align: center;
   padding: 6px 10px;
   max-width: 90%;
   word-break: break-word;
-}
-
-.color-section {
-  position: relative;
-  overflow: hidden;
 }
 
 .color-section::after {
@@ -179,8 +203,8 @@ body {
   transform: translateX(-50%) translateY(8px);
 
   background: rgba(20, 20, 20, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   color: #f5f5f5;
   padding: 8px 14px;
@@ -189,21 +213,21 @@ body {
   text-align: center;
 
   border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-
+  box-shadow: var(--shadow-soft);
   opacity: 0;
   transition: all 0.25s ease;
   pointer-events: none;
 
   max-width: 85%;
   width: max-content;
-  white-space: normal; 
+  white-space: normal;
   line-height: 1.4;
 }
 
 .color-section:hover::after {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+  filter: brightness(1.05);
 }
 
 .format-select {
@@ -211,7 +235,7 @@ body {
   font-size: 12px;
   border-radius: 8px;
 
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   color: #fff;
 
   border: none;
@@ -289,8 +313,13 @@ body {
   padding: 8px 12px;
   border-radius: 10px;
   font-size: 13px;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
   cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+button:active {
+  transform: scale(0.96);
 }
 
 .controles-paleta select {
@@ -311,12 +340,12 @@ body {
   padding: 10px 16px;
   border-radius: 10px;
   font-size: 13px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-soft);
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .popup-guardado.show {
